@@ -1,6 +1,6 @@
 Main Components:
 
-    Generate a new Bitcoin address (testnet).
+    Generate a new Bitcoin address (testnet). done.
 
     Create a watch-only wallet with that address.
 
