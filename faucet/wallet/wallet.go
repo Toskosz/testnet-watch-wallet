@@ -1,4 +1,4 @@
-package faucet
+package wallet
 
 import (
 	"crypto/ecdsa"
