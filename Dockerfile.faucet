@@ -8,10 +8,14 @@ WORKDIR /app/faucet
 
 # Download dependencies and build
 RUN go mod download
-RUN go build -o /usr/local/bin/faucet
+RUN go build -o faucet
 
 # Create database directory
 RUN mkdir -p /root/.faucet
 
-# Start faucet
-CMD ["faucet"] 
+# Make sure the binary is executable
+RUN chmod +x faucet
+
+# The container will be run interactively
+# To use: docker run -it --rm faucet /bin/bash
+# Then you can run ./faucet with your desired parameters 
