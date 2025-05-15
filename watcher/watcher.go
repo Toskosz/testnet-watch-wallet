@@ -9,8 +9,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/Toskosz/testnet-watch-wallet/watcher/nodeClient"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/thiago/testnet-watch-wallet/watcher/nodeClient"
 )
 
 type TransactionSummary struct {

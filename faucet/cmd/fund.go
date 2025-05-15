@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"faucet/db"
 	"fmt"
+
+	"github.com/Toskosz/testnet-watch-wallet/faucet/db"
 
 	"github.com/spf13/cobra"
 )

@@ -1,4 +1,4 @@
-module github.com/thiago/testnet-watch-wallet/watcher
+module github.com/Toskosz/testnet-watch-wallet/watcher
 
 go 1.24.3
 

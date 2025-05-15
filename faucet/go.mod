@@ -1,4 +1,4 @@
-module faucet
+module github.com/Toskosz/testnet-watch-wallet/faucet
 
 go 1.24.3
 

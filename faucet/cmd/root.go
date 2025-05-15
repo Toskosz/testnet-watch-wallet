@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"faucet/nodeClient"
+	"github.com/Toskosz/testnet-watch-wallet/faucet/nodeClient"
 
 	"github.com/spf13/cobra"
 )

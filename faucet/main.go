@@ -1,9 +1,10 @@
 package faucet
 
 import (
-	"faucet/cmd"
 	"fmt"
 	"os"
+
+	"github.com/Toskosz/testnet-watch-wallet/faucet/cmd"
 )
 
 func main() {
