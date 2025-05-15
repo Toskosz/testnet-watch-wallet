@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"faucet/db"
+	"faucet/wallet"
 	"fmt"
-
-	"faucet"
 
 	"github.com/spf13/cobra"
 )
@@ -16,7 +16,7 @@ func newGenerateCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			alias := args[0]
 
-			db, err := faucet.NewDB(GetDBPath())
+			db, err := db.NewDB(GetDBPath())
 			if err != nil {
 				return fmt.Errorf("failed to open database: %v", err)
 			}
@@ -31,7 +31,7 @@ func newGenerateCmd() *cobra.Command {
 				return fmt.Errorf("alias already exists: %s", alias)
 			}
 
-			newAddress := faucet.GenerateNewAddress()
+			newAddress := wallet.GenerateNewAddress()
 			if err := db.StoreAddress(newAddress, alias); err != nil {
 				return fmt.Errorf("failed to store address: %v", err)
 			}

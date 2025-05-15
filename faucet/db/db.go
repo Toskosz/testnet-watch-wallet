@@ -1,4 +1,4 @@
-package faucet
+package db
 
 import (
 	"database/sql"

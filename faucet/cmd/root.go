@@ -5,14 +5,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"faucet"
+	"faucet/nodeClient"
 
 	"github.com/spf13/cobra"
 )
 
 var (
 	dbPath string
-	client *faucet.Client
+	client *nodeClient.Client
 )
 
 var rootCmd = &cobra.Command{
@@ -28,7 +28,7 @@ func GetDBPath() string {
 }
 
 // GetClient returns the Bitcoin RPC client
-func GetClient() *faucet.Client {
+func GetClient() *nodeClient.Client {
 	return client
 }
 
@@ -47,7 +47,7 @@ func init() {
 	os.MkdirAll(filepath.Dir(dbPath), 0755)
 
 	// Initialize Bitcoin RPC client
-	client = faucet.NewClient("http://localhost:18332", "rpcuser", "rpcpass")
+	client = nodeClient.NewClient("http://localhost:18332", "rpcuser", "rpcpass")
 
 	// Register commands
 	registerCommands()

@@ -1,9 +1,8 @@
 package cmd
 
 import (
+	"faucet/db"
 	"fmt"
-
-	"faucet"
 
 	"github.com/spf13/cobra"
 )
@@ -17,7 +16,7 @@ func newTransferCmd() *cobra.Command {
 			fromAlias := args[0]
 			toAlias := args[1]
 
-			db, err := faucet.NewDB(GetDBPath())
+			db, err := db.NewDB(GetDBPath())
 			if err != nil {
 				return fmt.Errorf("failed to open database: %v", err)
 			}

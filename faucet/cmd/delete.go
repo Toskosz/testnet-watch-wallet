@@ -1,9 +1,8 @@
 package cmd
 
 import (
+	"faucet/db"
 	"fmt"
-
-	"faucet"
 
 	"github.com/spf13/cobra"
 )
@@ -16,7 +15,7 @@ func newDeleteCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			alias := args[0]
 
-			db, err := faucet.NewDB(GetDBPath())
+			db, err := db.NewDB(GetDBPath())
 			if err != nil {
 				return fmt.Errorf("failed to open database: %v", err)
 			}
