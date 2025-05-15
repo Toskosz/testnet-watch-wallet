@@ -1,16 +1,31 @@
 version: "3.8"
+
 services:
     bitcoin:
-        image: ruimarinho/bitcoin-core:24
-        container_name: bitcoin
-        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile.bitcoin
         ports:
-            - "18332:18332" # RPC
-            - "18333:18333" # P2P
+            - "18332:18332"
         volumes:
-            - bitcoin-data:/data
-            - ./configs/bitcoin.conf:/data/bitcoin.conf
-        command: -printtoconsole -conf=/data/bitcoin.conf -datadir=/data
+            - bitcoin-data:/root/.bitcoin
+        networks:
+            - testnet-network
+
+    watcher:
+        build:
+            context: .
+            dockerfile: Dockerfile.watcher
+        depends_on:
+            - bitcoin
+        environment:
+            - RPC_URL=http://bitcoin:18332
+            - RPC_USER=user
+            - RPC_PASS=pass
+        volumes:
+            - faucet-data:/root/.faucet
+        networks:
+            - testnet-network
 
     faucet:
         build:
@@ -18,13 +33,19 @@ services:
             dockerfile: Dockerfile.faucet
         depends_on:
             - bitcoin
-
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile.app
-        depends_on:
-            - faucet
+        environment:
+            - RPC_URL=http://bitcoin:18332
+            - RPC_USER=user
+            - RPC_PASS=pass
+        volumes:
+            - faucet-data:/root/.faucet
+        networks:
+            - testnet-network
 
 volumes:
     bitcoin-data:
+    faucet-data:
+
+networks:
+    testnet-network:
+        driver: bridge

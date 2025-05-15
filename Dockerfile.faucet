@@ -1,0 +1,17 @@
+FROM golang:1.21
+
+WORKDIR /app
+
+# Copy faucet project
+COPY faucet /app/faucet
+WORKDIR /app/faucet
+
+# Download dependencies and build
+RUN go mod download
+RUN go build -o /usr/local/bin/faucet
+
+# Create database directory
+RUN mkdir -p /root/.faucet
+
+# Start faucet
+CMD ["faucet"] 

@@ -1,0 +1,17 @@
+FROM golang:1.21
+
+WORKDIR /app
+
+# Copy watcher project
+COPY watcher /app/watcher
+WORKDIR /app/watcher
+
+# Download dependencies and build
+RUN go mod download
+RUN go build -o /usr/local/bin/watcher
+
+# Create database directory
+RUN mkdir -p /root/.faucet
+
+# Start watcher
+CMD ["watcher"] 

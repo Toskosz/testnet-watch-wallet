@@ -37,17 +37,36 @@ func Execute() error {
 }
 
 func init() {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Printf("Error getting home directory: %v\n", err)
-		os.Exit(1)
+	// Get configuration from environment variables
+	dbPath = os.Getenv("DB_PATH")
+	if dbPath == "" {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			fmt.Printf("Error getting home directory: %v\n", err)
+			os.Exit(1)
+		}
+		dbPath = filepath.Join(homeDir, ".faucet", "addresses.db")
 	}
-
-	dbPath = filepath.Join(homeDir, ".faucet", "addresses.db")
 	os.MkdirAll(filepath.Dir(dbPath), 0755)
 
+	// Get RPC configuration from environment variables
+	rpcURL := os.Getenv("RPC_URL")
+	if rpcURL == "" {
+		rpcURL = "http://localhost:18332"
+	}
+
+	rpcUser := os.Getenv("RPC_USER")
+	if rpcUser == "" {
+		rpcUser = "rpcuser"
+	}
+
+	rpcPass := os.Getenv("RPC_PASS")
+	if rpcPass == "" {
+		rpcPass = "rpcpass"
+	}
+
 	// Initialize Bitcoin RPC client
-	client = nodeClient.NewClient("http://localhost:18332", "rpcuser", "rpcpass")
+	client = nodeClient.NewClient(rpcURL, rpcUser, rpcPass)
 
 	// Register commands
 	registerCommands()

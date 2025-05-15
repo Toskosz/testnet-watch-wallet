@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -26,11 +27,26 @@ type Watcher struct {
 }
 
 func NewWatcher() *Watcher {
-	// TODO: Make these configurable
-	dbPath := "./faucet.db"
-	rpcURL := "http://localhost:18332"
-	rpcUser := "user"
-	rpcPass := "pass"
+	// Get configuration from environment variables
+	dbPath := os.Getenv("DB_PATH")
+	if dbPath == "" {
+		dbPath = "/root/.faucet/faucet.db"
+	}
+
+	rpcURL := os.Getenv("RPC_URL")
+	if rpcURL == "" {
+		rpcURL = "http://localhost:18332"
+	}
+
+	rpcUser := os.Getenv("RPC_USER")
+	if rpcUser == "" {
+		rpcUser = "user"
+	}
+
+	rpcPass := os.Getenv("RPC_PASS")
+	if rpcPass == "" {
+		rpcPass = "pass"
+	}
 
 	// Connect to database
 	db, err := sql.Open("sqlite3", dbPath)
