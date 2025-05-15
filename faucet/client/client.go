@@ -1,4 +1,4 @@
-package faucet
+package client
 
 import (
 	"bytes"
