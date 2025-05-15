@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+    bitcoin:
+        image: ruimarinho/bitcoin-core:24
+        container_name: bitcoin
+        restart: always
+        ports:
+            - "18332:18332" # RPC
+            - "18333:18333" # P2P
+        volumes:
+            - bitcoin-data:/data
+            - ./configs/bitcoin.conf:/data/bitcoin.conf
+        command: -printtoconsole -conf=/data/bitcoin.conf -datadir=/data
+
+    faucet:
+        build:
+            context: .
+            dockerfile: Dockerfile.faucet
+        depends_on:
+            - bitcoin
+
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile.app
+        depends_on:
+            - faucet
+
+volumes:
+    bitcoin-data:
