@@ -1,15 +1,17 @@
 services:
-    bitcoin:
+    bitcoin-core-regtest:
         build:
             context: .
             dockerfile: Dockerfile.bitcoin
         ports:
             - "18332:18332"
         volumes:
-            - bitcoin-data:/root/.bitcoin
+            - ./btc/:/home/bitcoin/.bitcoin
         networks:
             - testnet-network
-
+        command:
+            - printtoconsole
+            - regtest=1
     watcher:
         build:
             context: .
